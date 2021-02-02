@@ -1,64 +1,50 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
-if (process.argv.length < 3) {
-  console.log(
-    "Please provide the password as an argument: node mongo.js <password>"
-  );
-  process.exit(1);
+if ( process.argv.length<3 ) {
+  console.log('give password as argument')
+  process.exit(1)
 }
 
-const password = process.argv[2];
-const url = `mongodb+srv://fullstack:${password}@cluster0.vun5p.mongodb.net/fullstack?retryWrites=true&w=majority
-`;
-mongoose.connect(url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: true,
-});
+const password = process.argv[2]
 
-const phonebookSchema = new mongoose.Schema({
-  name: String,
-  number: String,
-});
 
-const Person = mongoose.model("Person", phonebookSchema);
-if (process.argv.length < 4) {
-  Person.find()
-    .then((persons) => {
-      console.log("Phonebook:");
-      persons.forEach((person) =>
-        console.log(`${person.name} ${person.number}`)
-      );
-    })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      mongoose.connection.close();
-      process.exit(1);
-    });
 
-  return;
-}
+const url =
+  `mongodb+srv://jacknex:${password}@cluster0-2d0yv.mongodb.net/test?retryWrites=true&w=majority`
 
-const name = process.argv[3];
+mongoose.connect(url, { useNewUrlParser: true })
 
-if (process.argv.length < 5) {
-  console.log(
-    "Please provide the number as an argument: node mongo.js <password> <name> <number>"
-  );
-  process.exit(1);
-}
-const number = process.argv[4];
+const personSchema = new mongoose.Schema({
+    name: String,
+    number: String,
 
-const person = new Person({
-  name,
-  number,
-});
+})
 
-person
-  .save()
-  .then((result) => {
-    console.log(`added ${name} number ${number} to phonebook`);
-    mongoose.connection.close();
+const Person = mongoose.model('Person', personSchema)
+
+if(process.argv[3]){
+  const name = process.argv[3]
+  const number = process.argv[4]
+  const person = new Person({
+    name: name,
+    number: number
   })
-  .catch((err) => console.log(err));
+
+  person.save().then(response => {
+    mongoose.connection.close()
+    console.log(`added ${name} ${number} to phonebook`)
+  })
+}
+
+else{
+  
+  Person.find({}).then(result => {
+    console.log('phonebook')
+    result.forEach(person => {
+      var s =  `${person.name} ${person.number}`
+      console.log(s)
+    })
+    mongoose.connection.close()
+  })
+
+}
