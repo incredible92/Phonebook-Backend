@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
-
+mongoose.set('useFindAndModify', false)
 const url = process.env.MONGODB_URI
 
 console.log('connecting to', url)
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {
     console.log('connected to MongoDB')
   })
@@ -12,13 +12,13 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFind
     console.log('error connecting to MongoDB:', error.message)
   })
 
-const personSchema = new mongoose.Schema({
+const noteSchema = new mongoose.Schema({
   content: String,
   date: Date,
   important: Boolean,
 })
 
-personSchema.set('toJSON', {
+noteSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -26,4 +26,4 @@ personSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('person', personSchema)
+module.exports = mongoose.model('Note', noteSchema)
