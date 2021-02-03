@@ -12,7 +12,14 @@ const password = process.argv[2]
 const url =
   `mongodb+srv://jacknex:${password}@cluster0-2d0yv.mongodb.net/test?retryWrites=true&w=majority`
 
-mongoose.connect(url, { useNewUrlParser: true })
+  mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+  .then(result => {
+    console.log('connected to MongoDB')
+  })
+  .catch((error) => {
+    console.log('error connecting to MongoDB:', error.message)
+  })
+
 
 const personSchema = new mongoose.Schema({
     name: String,
