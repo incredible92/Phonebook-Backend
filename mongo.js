@@ -22,8 +22,16 @@ const url =
 
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
+  content: {
+    type: String,
+    minlength: 5,
+    required: true
+  },
+  date: { 
+    type: Date,
+    required: true
+  },
+  important: Boolean
 
 })
 
