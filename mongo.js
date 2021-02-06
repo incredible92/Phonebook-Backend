@@ -10,7 +10,7 @@ const password = process.argv[2]
 
 
 const url =
-  `mongodb+srv://jacknex:${password}@cluster0-2d0yv.mongodb.net/test?retryWrites=true&w=majority`
+  `mongodb+srv://incredible001:<7LiLMxpxAatLyWyG>@cluster0.c9ynn.mongodb.net/<dbname>?retryWrites=true&w=majority`
 
   mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
   .then(result => {
