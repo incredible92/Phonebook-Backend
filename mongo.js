@@ -8,10 +8,8 @@ if ( process.argv.length<3 ) {
 const password = process.argv[2]
 
 
-
-const url =
-  `mongodb+srv://incredible001:<7LiLMxpxAatLyWyG>@cluster0.c9ynn.mongodb.net/<dbname>?retryWrites=true&w=majority`
-
+const url = `mongodb+srv://fullstack:${password}@cluster0.vun5p.mongodb.net/fullstack?retryWrites=true&w=majority
+`;
   mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
   .then(result => {
     console.log('connected to MongoDB')
