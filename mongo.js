@@ -51,13 +51,6 @@ if(process.argv[3]){
 
 else{
   
-  Person.find({}).then(result => {
-    console.log('phonebook')
-    result.forEach(person => {
-      var s =  `${person.name} ${person.number}`
-      console.log(s)
-    })
-    mongoose.connection.close()
-  })
+ 
 
 }
